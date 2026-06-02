@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WBC Boxing — El portal oficial de boxeo. Campeones, próximos combates, clasificaciones y la historia del World Boxing Council.">
+    <meta name="theme-color" content="#006B3F">
+    <title>WBC Boxing — Campeones del Mundo</title>
+
+    <!-- Preconnect para optimización de rendimiento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wbc: {
+                            green: '#006B3F',
+                            'green-light': '#1B8C5A',
+                            'green-lighter': '#2EA86F',
+                            'green-dark': '#004D2E',
+                            'green-900': '#003322',
+                            gold: '#D4AF37',
+                            'gold-light': '#F0D060',
+                            'gold-dark': '#B8941E',
+                            'gold-muted': 'rgba(212,175,55,0.15)',
+                        },
+                        neutral: {
+                            50: '#FAFAF9',
+                            100: '#F5F5F4',
+                            200: '#E7E5E4',
+                            300: '#D6D3D1',
+                            400: '#A8A29E',
+                            500: '#78716C',
+                            600: '#57534E',
+                            700: '#44403C',
+                            800: '#292524',
+                            900: '#1C1917',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in-left': 'fadeInLeft 0.8s ease-out forwards',
+                        'fade-in-right': 'fadeInRight 0.8s ease-out forwards',
+                        'scale-in': 'scaleIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.3s ease-out forwards',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        fadeInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(212,175,55,0.3), 0 0 20px rgba(212,175,55,0.1)' },
+                            '100%': { boxShadow: '0 0 15px rgba(212,175,55,0.5), 0 0 40px rgba(212,175,55,0.2)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { font-family: 'Inter', sans-serif; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #003322; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #F0D060; }
+
+        .pattern-bg {
+            background-image: radial-gradient(circle at 1px 1px, rgba(212,175,55,0.08) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .gold-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,51,34,0.9) 0%, rgba(0,51,34,0.4) 40%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .gold-ring {
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.3), 0 0 20px rgba(212,175,55,0.15);
+        }
+
+        .gold-line {
+            height: 3px;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+        }
+
+        .belt-stripe {
+            background: repeating-linear-gradient(
+                -45deg,
+                #D4AF37,
+                #D4AF37 10px,
+                #006B3F 10px,
+                #006B3F 20px
+            );
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+
+        *:focus-visible {
+            outline: 3px solid #D4AF37;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            z-index: 9999;
+            padding: 12px 24px;
+            background: #D4AF37;
+            color: #003322;
+            font-weight: 700;
+            border-radius: 0 0 8px 8px;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            transform: translateY(120%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .toast.show { transform: translateY(0); }
+
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s;
+            opacity: 0;
+        }
+        .mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .hero-video-overlay {
+            background: linear-gradient(
+                135deg,
+                rgba(0,51,34,0.85) 0%,
+                rgba(0,75,46,0.7) 40%,
+                rgba(0,107,63,0.6) 70%,
+                rgba(0,51,34,0.8) 100%
+            );
+        }
+
+        [data-tooltip] { position: relative; }
+        [data-tooltip]::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            background: #1C1917;
+            color: #F5F5F4;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s;
+        }
+        [data-tooltip]:hover::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-6px);
+        }
+    </style>
+</head>
+
+<body class="bg-wbc-green-900 text-neutral-100 font-body overflow-x-hidden">
+
+    <!-- Skip Link - Accesibilidad -->
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+
+    <!-- ========== NAVEGACIÓN ========== -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar" role="banner">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" role="navigation" aria-label="Navegación principal">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group" aria-label="WBC Boxing - Inicio">
+                <div class="w-12 h-12 bg-wbc-gold rounded-full flex items-center justify-center group-hover:animate-glow transition-all duration-300">
+                    <span class="font-heading font-bold text-wbc-green-900 text-lg tracking-tight">WBC</span>
+                </div>
+                <div class="hidden sm:block">
+                    <span class="font-heading font-bold text-lg text-wbc-gold tracking-wide">WBC BOXING</span>
+                    <span class="block text-[10px] text-neutral-400 tracking-widest uppercase -mt-1">World Boxing Council</span>
+                </div>
+            </a>
+
+            <!-- Menú escritorio -->
+            <ul class="hidden lg:flex items-center gap-1" role="menubar">
+                <li role="none"><a href="#inicio" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Inicio</a></li>
+                <li role="none"><a href="#campeones" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Campeones</a></li>
+                <li role="none"><a href="#combates" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Combates</a></li>
+                <li role="none"><a href="#clasificacion" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Clasificación</a></li>
+                <li role="none"><a href="#historia" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Historia</a></li>
+                <li role="none"><a href="#noticias" role="menuitem" class="px-4 py-2 text-sm font-medium text-neutral-200 hover:text-wbc-gold transition-colors duration-200 rounded-lg hover:bg-wbc-gold-muted">Noticias</a></li>
+            </ul>
+
+            <!-- Botones derecha -->
+            <div class="hidden lg:flex items-center gap-3">
+                <button id="searchToggle" class="p-2.5 rounded-lg text-neutral-300 hover:text-wbc-gold hover:bg-wbc-gold-muted transition-all duration-200" aria-label="Abrir búsqueda" data-tooltip="Buscar">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <a href="#newsletter" class="bg-wbc-gold hover:bg-wbc-gold-light text-wbc-green-900 font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-wbc-gold/20">
+                    Suscríbete
+                </a>
+            </div>
+
+            <!-- Botón menú móvil -->
+            <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted transition-all" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú de navegación">
+                <i data-lucide="menu" class="w-6 h-6" id="menuIcon"></i>
+            </button>
+        </nav>
+
+        <!-- Menú móvil -->
+        <div id="mobileMenu" class="mobile-menu lg:hidden bg-wbc-green-dark/98 backdrop-blur-xl border-t border-wbc-gold/10" role="menu">
+            <div class="max-w-7xl mx-auto px-6 py-4 space-y-1">
+                <a href="#inicio" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Inicio</a>
+                <a href="#campeones" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Campeones</a>
+                <a href="#combates" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Combates</a>
+                <a href="#clasificacion" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Clasificación</a>
+                <a href="#historia" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Historia</a>
+                <a href="#noticias" role="menuitem" class="block px-4 py-3 text-neutral-200 hover:text-wbc-gold hover:bg-wbc-gold-muted rounded-lg transition-colors font-medium">Noticias</a>
+                <div class="pt-3 border-t border-wbc-gold/10">
+                    <a href="#newsletter" class="block text-center bg-wbc-gold text-wbc-green-900 font-semibold px-5 py-3 rounded-lg">Suscríbete</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de búsqueda desplegable -->
+    <div id="searchBar" class="fixed top-0 left-0 right-0 z-[60] bg-wbc-green-dark/98 backdrop-blur-xl transform -translate-y-full transition-transform duration-300" role="search" aria-label="Búsqueda">
+        <div class="max-w-3xl mx-auto px-6 py-6">
+            <div class="flex items-center gap-4">
+                <i data-lucide="search" class="w-5 h-5 text-wbc-gold flex-shrink-0"></i>
+                <input type="search" id="searchInput" placeholder="Buscar campeones, combates, noticias..." class="flex-1 bg-transparent text-lg text-neutral-100 placeholder-neutral-500 outline-none border-b-2 border-wbc-gold/30 focus:border-wbc-gold transition-colors pb-2" aria-label="Término de búsqueda">
+                <button id="searchClose" class="p-2 text-neutral-400 hover:text-wbc-gold transition-colors" aria-label="Cerrar búsqueda">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="searchResults" class="mt-4 space-y-2"></div>
+        </div>
+    </div>
+
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
+    <main id="main-content" role="main">
+
+        <!-- ========== HERO ========== -->
+        <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Sección principal">
+            <div class="absolute inset-0">
+                <img src="https://picsum.photos/seed/boxing-ring-lights/1920/1080.jpg" alt="" class="w-full h-full object-cover" loading="eager" aria-hidden="true">
+                <div class="hero-video-overlay absolute inset-0"></div>
+                <div class="absolute inset-0 pattern-bg"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-32 w-full">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-wbc-gold/10 border border-wbc-gold/30 rounded-full px-4 py-1.5 mb-8 animate-fade-in-up" style="animation-delay: 0.1s">
+                            <span class="w-2 h-2 bg-wbc-gold rounded-full animate-pulse-slow"></span>
+                            <span class="text-xs font-semibold text-wbc-gold tracking-wider uppercase">Temporada 2025</span>
+                        </div>
+
+                        <h1 class="font-heading font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white leading-[0.9] tracking-tight mb-6 animate-fade-in-up" style="animation-delay: 0.2s">
+                            EL RING<br>
+                            <span class="text-wbc-gold">DE LEYENDA</span><br>
+                            ES Mundial
+                        </h1>
+
+                        <p class="text-lg md:text-xl text-neutral-300 leading-relaxed max-w-lg mb-10 animate-fade-in-up" style="animation-delay: 0.4s">
+                            Descubre a los campeones que han hecho historia en el ring. Sigue los próximos combates, consulta las clasificaciones y siente la pasión del boxeo.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 animate-fade-in-up" style="animation-delay: 0.6s">
+                            <a href="#combates" class="inline-flex items-center gap-2 bg-wbc-gold hover:bg-wbc-gold-light text-wbc-green-900 font-bold text-sm px-8 py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-wbc-gold/25 group">
+                                Próximos Combates
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <button id="playTrailerBtn" class="inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-medium text-sm px-6 py-4 rounded-lg transition-all duration-200 border border-white/10">
+                                <span class="w-10 h-10 bg-wbc-gold/20 rounded-full flex items-center justify-center">
+                                    <i data-lucide="play" class="w-4 h-4 text-wbc-gold ml-0.5"></i>
+                                </span>
+                                Ver Trailer
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas destacadas -->
+                    <div class="hidden lg:grid grid-cols-2 gap-4 animate-fade-in-right" style="animation-delay: 0.5s">
+                        <div class="bg-white/5 backdrop-blur-md border border-wbc-gold/20 rounded-2xl p-6 hover:border-wbc-gold/40 transition-all duration-300 group">
+                            <div class="w-12 h-12 bg-wbc-gold/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-wbc-gold/20 transition-colors">
+                                <i data-lucide="trophy" class="w-6 h-6 text-wbc-gold"></i>
+                            </div>
+                            <div class="font-heading font-bold text-4xl text-white mb-1" data-count="168">0</div>
+                            <p class="text-sm text-neutral-400">Campeones Mundiales</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md border border-wbc-gold/20 rounded-2xl p-6 hover:border-wbc-gold/40 transition-all duration-300 group mt-8">
+                            <div class="w-12 h-12 bg-wbc-gold/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-wbc-gold/20 transition-colors">
+                                <i data-lucide="swords" class="w-6 h-6 text-wbc-gold"></i>
+                            </div>
+                            <div class="font-heading font-bold text-4xl text-white mb-1" data-count="2400">0</div>
+                            <p class="text-sm text-neutral-400">Combates Históricos</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md border border-wbc-gold/20 rounded-2xl p-6 hover:border-wbc-gold/40 transition-all duration-300 group">
+                            <div class="w-12 h-12 bg-wbc-gold/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-wbc-gold/20 transition-colors">
+                                <i data-lucide="globe" class="w-6 h-6 text-wbc-gold"></i>
+                            </div>
+                            <div class="font-heading font-bold text-4xl text-white mb-1" data-count="166">0</div>
+                            <p class="text-sm text-neutral-400">Países Afiliados</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md border border-wbc-gold/20 rounded-2xl p-6 hover:border-wbc-gold/40 transition-all duration-300 group mt-8">
+                            <div class="w-12 h-12 bg-wbc-gold/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-wbc-gold/20 transition-colors">
+                                <i data-lucide="calendar" class="w-6 h-6 text-wbc-gold"></i>
+                            </div>
+                            <div class="font-heading font-bold text-4xl text-white mb-1" data-count="63">0</div>
+                            <p class="text-sm text-neutral-400">Años de Historia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse-slow" aria-hidden="true">
+                <span class="text-xs text-neutral-500 tracking-widest uppercase">Scroll</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-wbc-gold"></i>
+            </div>
+        </section>
+
+        <!-- Franja decorativa WBC -->
+        <div class="belt-stripe h-2" aria-hidden="true"></div>
+
+        <!-- ========== CAMPEONES ========== -->
+        <section id="campeones" class="py-24 md:py-32 relative" aria-labelledby="campeones-title">
+            <div class="absolute inset-0 pattern-bg opacity-50" aria-hidden="true"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">Leyenda Viva</span>
+                    <h2 id="campeones-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight mb-4">
+                        Campeones <span class="text-wbc-gold">Mundiales</span>
+                    </h2>
+                    <div class="gold-line w-24 mx-auto mb-6"></div>
+                    <p class="text-neutral-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                        Los mejores boxeadores del mundo que han conquistado el cinturón verde y dorado del WBC.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Campeón 1 -->
+                    <article class="group reveal delay-100">
+                        <div class="relative overflow-hidden rounded-2xl bg-wbc-green-dark border border-wbc-gold/10 hover:border-wbc-gold/30 transition-all duration-300">
+                            <div class="aspect-[3/4] relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxer-champion-1/600/800.jpg" alt="Tyson Fury, campeón de peso pesado WBC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-wbc-green-900 via-transparent to-transparent"></div>
+                                <div class="absolute top-3 left-3 bg-wbc-gold text-wbc-green-900 text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full">
+                                    Peso Pesado
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-heading font-bold text-xl text-white group-hover:text-wbc-gold transition-colors">Tyson Fury</h3>
+                                <p class="text-sm text-neutral-400 mt-1">Reino Unido · 34-1-1 · 24 KO</p>
+                                <div class="flex items-center gap-1 mt-3">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Campeón 2 -->
+                    <article class="group reveal delay-200">
+                        <div class="relative overflow-hidden rounded-2xl bg-wbc-green-dark border border-wbc-gold/10 hover:border-wbc-gold/30 transition-all duration-300">
+                            <div class="aspect-[3/4] relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxer-champion-2/600/800.jpg" alt="Canelo Álvarez, campeón de supermedio WBC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-wbc-green-900 via-transparent to-transparent"></div>
+                                <div class="absolute top-3 left-3 bg-wbc-gold text-wbc-green-900 text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full">
+                                    Supermedio
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-heading font-bold text-xl text-white group-hover:text-wbc-gold transition-colors">Canelo Álvarez</h3>
+                                <p class="text-sm text-neutral-400 mt-1">México · 62-2-2 · 39 KO</p>
+                                <div class="flex items-center gap-1 mt-3">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Campeón 3 -->
+                    <article class="group reveal delay-300">
+                        <div class="relative overflow-hidden rounded-2xl bg-wbc-green-dark border border-wbc-gold/10 hover:border-wbc-gold/30 transition-all duration-300">
+                            <div class="aspect-[3/4] relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxer-champion-3/600/800.jpg" alt="Naoya Inoue, campeón de peso gallo WBC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-wbc-green-900 via-transparent to-transparent"></div>
+                                <div class="absolute top-3 left-3 bg-wbc-gold text-wbc-green-900 text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full">
+                                    Peso Gallo
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-heading font-bold text-xl text-white group-hover:text-wbc-gold transition-colors">Naoya Inoue</h3>
+                                <p class="text-sm text-neutral-400 mt-1">Japón · 28-0 · 25 KO</p>
+                                <div class="flex items-center gap-1 mt-3">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Campeón 4 -->
+                    <article class="group reveal delay-400">
+                        <div class="relative overflow-hidden rounded-2xl bg-wbc-green-dark border border-wbc-gold/10 hover:border-wbc-gold/30 transition-all duration-300">
+                            <div class="aspect-[3/4] relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxer-champion-4/600/800.jpg" alt="Errol Spence Jr, campeón de wélter WBC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-wbc-green-900 via-transparent to-transparent"></div>
+                                <div class="absolute top-3 left-3 bg-wbc-gold text-wbc-green-900 text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full">
+                                    Wélter
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-heading font-bold text-xl text-white group-hover:text-wbc-gold transition-colors">Errol Spence Jr</h3>
+                                <p class="text-sm text-neutral-400 mt-1">EE.UU. · 28-1 · 22 KO</p>
+                                <div class="flex items-center gap-1 mt-3">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-wbc-gold fill-wbc-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-neutral-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PRÓXIMOS COMBATES ========== -->
+        <section id="combates" class="py-24 md:py-32 bg-wbc-green-dark relative" aria-labelledby="combates-title">
+            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-wbc-gold/30 to-transparent" aria-hidden="true"></div>
+
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">No te lo pierdas</span>
+                    <h2 id="combates-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight mb-4">
+                        Próximos <span class="text-wbc-gold">Combates</span>
+                    </h2>
+                    <div class="gold-line w-24 mx-auto mb-6"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Combate 1 - Destacado -->
+                    <article class="reveal-scale">
+                        <div class="relative overflow-hidden rounded-2xl bg-wbc-green-900 border border-wbc-gold/20 hover:border-wbc-gold/40 transition-all duration-300 group">
+                            <div class="absolute inset-0 bg-gradient-to-r from-wbc-gold/5 to-transparent" aria-hidden="true"></div>
+                            <div class="relative grid md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-6 md:p-8">
+                                <div class="flex items-center gap-4 md:justify-end text-center md:text-right">
+                                    <div class="hidden sm:block">
+                                        <h3 class="font-heading font-bold text-2xl text-white">Tyson Fury</h3>
+                                        <p class="text-sm text-neutral-400">34-1-1 · 24 KO</p>
+                                        <span class="inline-block text-xs text-wbc-gold bg-wbc-gold/10 px-2 py-0.5 rounded mt-1">REINO UNIDO</span>
+                                    </div>
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-wbc-gold/30 flex-shrink-0 gold-ring">
+                                        <img src="https://picsum.photos/seed/fury-face/200/200.jpg" alt="Tyson Fury" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col items-center gap-2 py-4">
+                                    <span class="text-xs text-wbc-gold tracking-widest uppercase font-semibold">15 Mar 2025</span>
+                                    <div class="w-16 h-16 bg-wbc-gold/10 border border-wbc-gold/30 rounded-full flex items-center justify-center">
+                                        <span class="font-heading font-bold text-xl text-wbc-gold">VS</span>
+                                    </div>
+                                    <span class="text-xs text-neutral-500">Riyadh, Arabia Saudita</span>
+                                    <span class="text-[10px] bg-wbc-gold text-wbc-green-900 font-bold px-3 py-1 rounded-full tracking-wider uppercase mt-1">Peso Pesado</span>
+                                </div>
+
+                                <div class="flex items-center gap-4 text-center md:text-left">
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-wbc-gold/30 flex-shrink-0 gold-ring">
+                                        <img src="https://picsum.photos/seed/oleksandr-ukr/200/200.jpg" alt="Oleksandr Usyk" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                    <div class="hidden sm:block">
+                                        <h3 class="font-heading font-bold text-2xl text-white">Oleksandr Usyk</h3>
+                                        <p class="text-sm text-neutral-400">22-0 · 14 KO</p>
+                                        <span class="inline-block text-xs text-wbc-gold bg-wbc-gold/10 px-2 py-0.5 rounded mt-1">UCRANIA</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between px-6 md:px-8 py-4 border-t border-wbc-gold/10 bg-wbc-green-900/50">
+                                <div class="flex items-center gap-4 text-sm text-neutral-400">
+                                    <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-wbc-gold"></i> 21:00 CET</span>
+                                    <span class="flex items-center gap-1.5"><i data-lucide="tv" class="w-3.5 h-3.5 text-wbc-gold"></i> DAZN PPV</span>
+                                </div>
+                                <button class="buy-ticket-btn bg-wbc-gold hover:bg-wbc-gold-light text-wbc-green-900 font-bold text-sm px-6 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-wbc-gold/20" data-fight="Fury vs Usyk II">
+                                    Comprar Entradas
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Combate 2 -->
+                    <article class="reveal delay-100">
+                        <div class="rounded-2xl bg-wbc-green-900/60 border border-wbc-gold/10 hover:border-wbc-gold/25 transition-all duration-300 p-6 md:p-8">
+                            <div class="grid md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
+                                <div class="flex items-center gap-4 md:justify-end">
+                                    <div class="text-right hidden sm:block">
+                                        <h3 class="font-heading font-bold text-lg text-white">Canelo Álvarez</h3>
+                                        <p class="text-xs text-neutral-400">62-2-2 · 39 KO</p>
+                                    </div>
+                                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-wbc-gold/20 flex-shrink-0">
+                                        <img src="https://picsum.photos/seed/canelo-face/200/200.jpg" alt="Canelo Álvarez" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-[10px] text-wbc-gold tracking-widest uppercase">3 May 2025</span>
+                                    <span class="font-heading font-bold text-wbc-gold/60 text-sm">VS</span>
+                                    <span class="text-[10px] text-neutral-500">Las Vegas, EE.UU.</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-wbc-gold/20 flex-shrink-0">
+                                        <img src="https://picsum.photos/seed/teri-crawford/200/200.jpg" alt="Terence Crawford" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                    <div class="hidden sm:block">
+                                        <h3 class="font-heading font-bold text-lg text-white">Terence Crawford</h3>
+                                        <p class="text-xs text-neutral-400">41-0 · 31 KO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-4 border-t border-wbc-gold/5">
+                                <span class="text-xs text-neutral-500 flex items-center gap-1.5"><i data-lucide="tag" class="w-3 h-3 text-wbc-gold"></i> Supermedio · 168 lbs</span>
+                                <button class="buy-ticket-btn text-wbc-gold hover:text-wbc-gold-light text-sm font-semibold flex items-center gap-1 transition-colors" data-fight="Canelo vs Crawford">
+                                    Detalles <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Combate 3 -->
+                    <article class="reveal delay-200">
+                        <div class="rounded-2xl bg-wbc-green-900/60 border border-wbc-gold/10 hover:border-wbc-gold/25 transition-all duration-300 p-6 md:p-8">
+                            <div class="grid md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
+                                <div class="flex items-center gap-4 md:justify-end">
+                                    <div class="text-right hidden sm:block">
+                                        <h3 class="font-heading font-bold text-lg text-white">Naoya Inoue</h3>
+                                        <p class="text-xs text-neutral-400">28-0 · 25 KO</p>
+                                    </div>
+                                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-wbc-gold/20 flex-shrink-0">
+                                        <img src="https://picsum.photos/seed/inoue-face/200/200.jpg" alt="Naoya Inoue" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-[10px] text-wbc-gold tracking-widest uppercase">14 Jun 2025</span>
+                                    <span class="font-heading font-bold text-wbc-gold/60 text-sm">VS</span>
+                                    <span class="text-[10px] text-neutral-500">Tokio, Japón</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-wbc-gold/20 flex-shrink-0">
+                                        <img src="https://picsum.photos/seed/nakatani-face/200/200.jpg" alt="Junto Nakatani" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                    <div class="hidden sm:block">
+                                        <h3 class="font-heading font-bold text-lg text-white">Junto Nakatani</h3>
+                                        <p class="text-xs text-neutral-400">28-0 · 22 KO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-4 border-t border-wbc-gold/5">
+                                <span class="text-xs text-neutral-500 flex items-center gap-1.5"><i data-lucide="tag" class="w-3 h-3 text-wbc-gold"></i> Peso Gallo · 118 lbs</span>
+                                <button class="buy-ticket-btn text-wbc-gold hover:text-wbc-gold-light text-sm font-semibold flex items-center gap-1 transition-colors" data-fight="Inoue vs Nakatani">
+                                    Detalles <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CLASIFICACIÓN ========== -->
+        <section id="clasificacion" class="py-24 md:py-32 relative" aria-labelledby="clasificacion-title">
+            <div class="absolute inset-0 pattern-bg opacity-30" aria-hidden="true"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">Ranking Oficial</span>
+                    <h2 id="clasificacion-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight mb-4">
+                        Clasificación <span class="text-wbc-gold">WBC</span>
+                    </h2>
+                    <div class="gold-line w-24 mx-auto mb-6"></div>
+                </div>
+
+                <!-- Tabs de categorías de peso -->
+                <div class="flex flex-wrap justify-center gap-2 mb-10 reveal" role="tablist" aria-label="Categorías de peso">
+                    <button class="weight-tab active bg-wbc-gold text-wbc-green-900 font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200" role="tab" aria-selected="true" aria-controls="panel-pesado" data-weight="pesado">Peso Pesado</button>
+                    <button class="weight-tab bg-wbc-green-dark text-neutral-300 hover:text-wbc-gold border border-wbc-gold/10 hover:border-wbc-gold/30 font-medium text-sm px-5 py-2.5 rounded-lg transition-all duration-200" role="tab" aria-selected="false" aria-controls="panel-supermedio" data-weight="supermedio">Supermedio</button>
+                    <button class="weight-tab bg-wbc-green-dark text-neutral-300 hover:text-wbc-gold border border-wbc-gold/10 hover:border-wbc-gold/30 font-medium text-sm px-5 py-2.5 rounded-lg transition-all duration-200" role="tab" aria-selected="false" aria-controls="panel-welter" data-weight="welter">Wélter</button>
+                    <button class="weight-tab bg-wbc-green-dark text-neutral-300 hover:text-wbc-gold border border-wbc-gold/10 hover:border-wbc-gold/30 font-medium text-sm px-5 py-2.5 rounded-lg transition-all duration-200" role="tab" aria-selected="false" aria-controls="panel-gallo" data-weight="gallo">Peso Gallo</button>
+                </div>
+
+                <div class="reveal delay-100">
+                    <div id="rankingTable" class="bg-wbc-green-dark/60 backdrop-blur-sm border border-wbc-gold/10 rounded-2xl overflow-hidden" role="tabpanel">
+                        <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-wbc-gold/5 border-b border-wbc-gold/10 text-xs font-semibold text-wbc-gold tracking-wider uppercase">
+                            <div class="col-span-1">#</div>
+                            <div class="col-span-4">Boxeador</div>
+                            <div class="col-span-2">País</div>
+                            <div class="col-span-2 text-center">Registro</div>
+                            <div class="col-span-1 text-center">KO</div>
+                            <div class="col-span-2 text-right">Estado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HISTORIA ========== -->
+        <section id="historia" class="py-24 md:py-32 bg-wbc-green-dark relative overflow-hidden" aria-labelledby="historia-title">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-wbc-gold/5 rounded-full blur-3xl" aria-hidden="true"></div>
+            <div class="absolute bottom-0 left-0 w-72 h-72 bg-wbc-green-light/10 rounded-full blur-3xl" aria-hidden="true"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="reveal-left">
+                        <div class="relative">
+                            <div class="aspect-[4/3] rounded-2xl overflow-hidden border border-wbc-gold/20">
+                                <img src="https://picsum.photos/seed/boxing-history-wbc/800/600.jpg" alt="Historia del WBC: momentos icónicos del boxeo" class="w-full h-full object-cover" loading="lazy">
+                            </div>
+                            <div class="absolute -bottom-6 -right-4 md:-right-6 bg-wbc-green-900 border border-wbc-gold/20 rounded-xl p-4 md:p-5 shadow-2xl animate-float">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-wbc-gold/10 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="award" class="w-6 h-6 text-wbc-gold"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-heading font-bold text-2xl text-wbc-gold">1963</div>
+                                        <p class="text-xs text-neutral-400">Año de fundación</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal-right">
+                        <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">Leyenda y Tradición</span>
+                        <h2 id="historia-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight mb-6">
+                            La Historia del <span class="text-wbc-gold">WBC</span>
+                        </h2>
+                        <div class="gold-line w-20 mb-8"></div>
+
+                        <div class="space-y-6 text-neutral-300 leading-relaxed">
+                            <p>
+                                El <strong class="text-white">World Boxing Council</strong> fue fundado en 1963 en la Ciudad de México por un grupo de 11 países comprometidos con la regulación y el desarrollo del boxeo a nivel mundial.
+                            </p>
+                            <p>
+                                Desde entonces, el WBC se ha convertido en la organización de boxeo más prestigiosa del mundo, con su icónico <strong class="text-wbc-gold">cinturón verde y dorado</strong> como símbolo supremo de la excelencia pugilística.
+                            </p>
+                            <p>
+                                Leyendas como <strong class="text-white">Muhammad Ali</strong>, <strong class="text-white">Mike Tyson</strong>, <strong class="text-white">Roberto Durán</strong> y <strong class="text-white">Julio César Chávez</strong> han llevado el cinturón WBC, consolidando su posición como el galardón más deseado del boxeo.
+                            </p>
+                        </div>
+
+                        <div class="mt-10 space-y-4">
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-10 h-10 bg-wbc-gold/10 border border-wbc-gold/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-wbc-gold/20 transition-colors">
+                                    <span class="font-heading font-bold text-sm text-wbc-gold">63</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-heading font-semibold text-white">Fundación en Ciudad de México</h4>
+                                    <p class="text-sm text-neutral-500">11 países firman el acta constitutiva</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-10 h-10 bg-wbc-gold/10 border border-wbc-gold/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-wbc-gold/20 transition-colors">
+                                    <span class="font-heading font-bold text-sm text-wbc-gold">76</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-heading font-semibold text-white">Ali vs Norton III</h4>
+                                    <p class="text-sm text-neutral-500">Uno de los combates más emblemáticos bajo sanción WBC</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-10 h-10 bg-wbc-gold/10 border border-wbc-gold/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-wbc-gold/20 transition-colors">
+                                    <span class="font-heading font-bold text-sm text-wbc-gold">25</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-heading font-semibold text-white">Era Moderna</h4>
+                                    <p class="text-sm text-neutral-500">Expansión global y nuevo sistema de clasificación</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== GALERÍA MULTIMEDIA ========== -->
+        <section class="py-24 md:py-32 relative" aria-labelledby="galeria-title">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">Momentos Épicos</span>
+                    <h2 id="galeria-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight mb-4">
+                        Galería <span class="text-wbc-gold">Multimedia</span>
+                    </h2>
+                    <div class="gold-line w-24 mx-auto mb-6"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+                    <div class="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group reveal-scale cursor-pointer" tabindex="0" role="button" aria-label="Ampliar imagen: knockout épico en el ring">
+                        <img src="https://picsum.photos/seed/boxing-knockout-epic/800/800.jpg" alt="Knockout épico durante un combate WBC" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <div>
+                                <h3 class="font-heading font-bold text-xl text-white">KO de la Noche</h3>
+                                <p class="text-sm text-neutral-300">El golpe que hizo historia</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="maximize-2" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-2xl overflow-hidden group reveal delay-100 cursor-pointer" tabindex="0" aria-label="Ampliar imagen: público en el ring">
+                        <img src="https://picsum.photos/seed/boxing-crowd-roar/400/300.jpg" alt="Público emocionado durante un combate" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i data-lucide="play-circle" class="w-10 h-10 text-wbc-gold"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-2xl overflow-hidden group reveal delay-200 cursor-pointer" tabindex="0" aria-label="Ampliar imagen: cinturón WBC">
+                        <img src="https://picsum.photos/seed/wbc-belt-gold/400/300.jpg" alt="Cinturón verde y dorado del WBC en primer plano" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i data-lucide="maximize-2" class="w-8 h-8 text-wbc-gold"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-2xl overflow-hidden group reveal delay-300 cursor-pointer" tabindex="0" aria-label="Ampliar imagen: entrenamiento">
+                        <img src="https://picsum.photos/seed/boxing-training-gym/400/300.jpg" alt="Boxeador entrenando en el gimnasio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i data-lucide="maximize-2" class="w-8 h-8 text-wbc-gold"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-2xl overflow-hidden group reveal delay-400 cursor-pointer" tabindex="0" aria-label="Ampliar imagen: pesada oficial">
+                        <img src="https://picsum.photos/seed/boxing-weighin/400/300.jpg" alt="Pesada oficial previa al combate" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i data-lucide="maximize-2" class="w-8 h-8 text-wbc-gold"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NOTICIAS ========== -->
+        <section id="noticias" class="py-24 md:py-32 bg-wbc-green-dark relative" aria-labelledby="noticias-title">
+            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-wbc-gold/30 to-transparent" aria-hidden="true"></div>
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 reveal">
+                    <div>
+                        <span class="inline-block text-xs font-semibold text-wbc-gold tracking-[0.2em] uppercase mb-4">Última Hora</span>
+                        <h2 id="noticias-title" class="font-heading font-bold text-4xl md:text-5xl text-white tracking-tight">
+                            Noticias del <span class="text-wbc-gold">Ring</span>
+                        </h2>
+                    </div>
+                    <a href="#" class="mt-4 md:mt-0 text-wbc-gold hover:text-wbc-gold-light text-sm font-semibold flex items-center gap-1 transition-colors group">
+                        Ver todas <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <article class="group reveal delay-100">
+                        <a href="#" class="block rounded-2xl bg-wbc-green-900/60 border border-wbc-gold/10 hover:border-wbc-gold/25 transition-all duration-300 overflow-hidden">
+                            <div class="aspect-video relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxing-news-press/600/340.jpg" alt="Conferencia de prensa WBC 2025" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute top-3 left-3 bg-wbc-gold text-wbc-green-900 text-[10px] font-bold px-2.5 py-1 rounded-full tracking-wider uppercase">Destacado</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 text-xs text-neutral-500 mb-3">
+                                    <time datetime="2025-02-20">20 Feb 2025</time>
+                                    <span>·</span>
+                                    <span>5 min lectura</span>
+                                </div>
+                                <h3 class="font-heading font-semibold text-lg text-white group-hover:text-wbc-gold transition-colors leading-tight mb-2">
+                                    WBC anuncia nueva serie de combates estelares para 2025
+                                </h3>
+                                <p class="text-sm text-neutral-400 line-clamp-2">
+                                    El presidente del WBC ha revelado un calendario espectacular con las mayores estrellas del boxeo mundial.
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="group reveal delay-200">
+                        <a href="#" class="block rounded-2xl bg-wbc-green-900/60 border border-wbc-gold/10 hover:border-wbc-gold/25 transition-all duration-300 overflow-hidden">
+                            <div class="aspect-video relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxing-safety-rules/600/340.jpg" alt="Novedades en seguridad en el ring" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 text-xs text-neutral-500 mb-3">
+                                    <time datetime="2025-02-18">18 Feb 2025</time>
+                                    <span>·</span>
+                                    <span>3 min lectura</span>
+                                </div>
+                                <h3 class="font-heading font-semibold text-lg text-white group-hover:text-wbc-gold transition-colors leading-tight mb-2">
+                                    Nuevas medidas de seguridad para proteger la salud de los boxeadores
+                                </h3>
+                                <p class="text-sm text-neutral-400 line-clamp-2">
+                                    El WBC implementa protocolos médicos avanzados y revisiones obligatorias para todos los combatientes.
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="group reveal delay-300">
+                        <a href="#" class="block rounded-2xl bg-wbc-green-900/60 border border-wbc-gold/10 hover:border-wbc-gold/25 transition-all duration-300 overflow-hidden">
+                            <div class="aspect-video relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/boxing-young-talent/600/340.jpg" alt="Nuevas promesas del boxeo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                                <div class="absolute top-3 left-3 bg-wbc-green-light text-white text-[10px] font-bold px-2.5 py-1 rounded-full tracking-wider uppercase">Nueva promesa</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 text-xs text-neutral-500 mb-3">
+                                    <time datetime="2025-02-15">15 Feb 2025</time>
+                                    <span>·</span>
+                                    <span>4 min lectura</span>
+                                </div>
+                                <h3 class="font-heading font-semibold text-lg text-white group-hover:text-wbc-gold transition-colors leading-tight mb-2">
+                                    Las 5 promesas sub-20 que podrían dominar el boxeo
+                                </h3>
+                                <p class="text-sm text-neutral-400 line-clamp-2">
+                                    Jóvenes talentos de México, Japón, Kazajistán, EE.UU. y Reino Unido que marcarán la próxima década.
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NEWSLETTER ========== -->
+        <section id="newsletter" class="py-24 md:py-32 relative overflow-hidden" aria-labelledby="newsletter-title">
+            <div class="absolute inset-0 pattern-bg opacity-40" aria-hidden="true"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-wbc-gold/5 rounded-full blur-3xl" aria-hidden="true"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto px-6 text-center reveal">
+                <div class="w-16 h-16 bg-wbc-gold/10 border border-wbc-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-8 animate-glow">
+                    <i data-lucide="bell-ring" class="w-7 h-7 text-wbc-gold"></i>
+                </div>
+                <h2 id="newsletter-title" class="font-heading font-bold text-3xl md:text-4xl text-white tracking-tight mb-4">
+                    No te pierdas <span class="text-wbc-gold">ningún combate</span>
+                </h2>
+                <p class="text-neutral-400 text-lg leading-relaxed mb-10">
+                    Suscríbete a nuestro boletín y recibe las últimas noticias, resultados y ofertas exclusivas de entradas directamente en tu correo.
+                </p>
+
+                <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto" novalidate>
+                    <label for="emailInput" class="sr-only">Dirección de correo electrónico</label>
+                    <input
+                        type="email"
+                        id="emailInput"
+                        name="email"
+                        placeholder="Tu correo electrónico"
+                        required
+                        autocomplete="email"
+                        class="flex-1 bg-wbc-green-dark border border-wbc-gold/20 rounded-lg px-5 py-3.5 text-white placeholder-neutral-500 outline-none focus:border-wbc-gold/50 focus:ring-2 focus:ring-wbc-gold/20 transition-all"
+                        aria-describedby="emailError"
+                    >
+                    <button type="submit" class="bg-wbc-gold hover:bg-wbc-gold-light text-wbc-green-900 font-bold text-sm px-8 py-3.5 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-wbc-gold/20 whitespace-nowrap flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        Suscribirse
+                    </button>
+                </form>
+                <p id="emailError" class="text-red-400 text-sm mt-2 hidden" role="alert"></p>
+                <p class="text-xs text-neutral-600 mt-4">Sin spam. Puedes cancelar la suscripción en cualquier momento.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-wbc-green-dark border-t border-wbc-gold/10 pt-16 pb-8" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 bg-wbc-gold rounded-full flex items-center justify-center">
+                            <span class="font-heading font-bold text-wbc-green-900 text-sm">WBC</span>
+                        </div>
+                        <span class="font-heading font-bold text-wbc-gold tracking-wide">WBC BOXING</span>
+                    </div>
+                    <p class="text-sm text-neutral-500 leading-relaxed mb-6">
+                        El World Boxing Council, la voz del boxeo mundial desde 1963.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="w-9 h-9 bg-wbc-gold/10 hover:bg-wbc-gold/20 rounded-lg flex items-center justify-center text-wbc-gold transition-colors" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-wbc-gold/10 hover:bg-wbc-gold/20 rounded-lg flex items-center justify-center text-wbc-gold transition-colors" aria-label="Twitter / X">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-wbc-gold/10 hover:bg-wbc-gold/20 rounded-lg flex items-center justify-center text-wbc-gold transition-colors" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-wbc-gold/10 hover:bg-wbc-gold/20 rounded-lg flex items-center justify-center text-wbc-gold transition-colors" aria-label="YouTube">
+                            <i data-lucide="youtube" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <nav aria-label="Enlaces rápidos">
+                    <h3 class="font-heading font-semibold text-white text-sm tracking-wider uppercase mb-5">Explorar</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#campeones" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Campeones</a></li>
+                        <li><a href="#combates" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Próximos Combates</a></li>
+                        <li><a href="#clasificacion" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Clasificaciones</a></li>
+                        <li><a href="#historia" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Historia</a></li>
+                        <li><a href="#noticias" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Noticias</a></li>
+                    </ul>
+                </nav>
+
+                <nav aria-label="Categorías de peso">
+                    <h3 class="font-heading font-semibold text-white text-sm tracking-wider uppercase mb-5">Categorías</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Peso Mínimo</a></li>
+                        <li><a href="#" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Peso Mosca</a></li>
+                        <li><a href="#" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Peso Pluma</a></li>
+                        <li><a href="#" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Peso Wélter</a></li>
+                        <li><a href="#" class="text-sm text-neutral-500 hover:text-wbc-gold transition-colors">Peso Pesado</a></li>
+                    </ul>
+                </nav>
+
+                <div>
+                    <h3 class="font-heading font-semibold text-white text-sm tracking-wider uppercase mb-5">Contacto</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2.5 text-sm text-neutral-500">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-wbc-gold flex-shrink-0"></i>
+                            Av. Paseo de la Reforma, CDMX
+                        </li>
+                        <li class="flex items-center gap-2.5 text-sm text-neutral-500">
+                            <i data-lucide="mail" class="w-4 h-4 text-wbc-gold flex-shrink-0"></i>
+                            <a href="mailto:info@wbcboxing.com" class="hover:text-wbc-gold transition-colors">info@wbcboxing.com</a>
+                        </li>
+                        <li class="flex items-center gap-2.5 text-sm text-neutral-500">
+                            <i data-lucide="phone" class="w-4 h-4 text-wbc-gold flex-shrink-0"></i>
+                            <a href="tel:+525555551234" class="hover:text-wbc-gold transition-colors">+52 55 5555 1234</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="belt-stripe h-1.5 rounded-full mb-8" aria-hidden="true"></div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-600">
+                <p>© 2025 WBC Boxing. Todos los derechos reservados.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-wbc-gold transition-colors">Política de Privacidad</a>
+                    <a href="#" class="hover:text-wbc-gold transition-colors">Términos de Uso</a>
+                    <a href="#" class="hover:text-wbc-gold transition-colors">Accesibilidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== TOAST NOTIFICACIÓN ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="polite">
+        <div class="bg-wbc-green-dark border border-wbc-gold/30 rounded-xl px-6 py-4 shadow-2xl flex items-center gap-3 max-w-sm">
+            <div class="w-8 h-8 bg-wbc-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i data-lucide="check-circle" class="w-4 h-4 text-wbc-gold" id="toastIcon"></i>
+            </div>
+            <p class="text-sm text-neutral-200" id="toastMessage">Acción realizada correctamente</p>
+        </div>
+    </div>
+
+    <!-- ========== MODAL TRAILER ========== -->
+    <div id="trailerModal" class="fixed inset-0 z-[70] bg-black/90 backdrop-blur-sm flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="trailerTitle">
+        <div class="relative w-full max-w-4xl">
+            <button id="closeTrailer" class="absolute -top-12 right-0 text-neutral-400 hover:text-white transition-colors" aria-label="Cerrar vídeo">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="aspect-video bg-wbc-green-dark rounded-2xl overflow-hidden border border-wbc-gold/20 flex items-center justify-center">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-wbc-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-slow">
+                        <i data-lucide="play" class="w-8 h-8 text-wbc-gold ml-1"></i>
+                    </div>
+                    <h3 id="trailerTitle" class="font-heading font-bold text-2xl text-white mb-2">WBC: Leyenda Eterna</h3>
+                    <p class="text-sm text-neutral-400">El trailer oficial estará disponible pronto</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // Inicializar icones Lucide
+        lucide.createIcons();
+
+        // ===== DATOS DE CLASIFICACIÓN =====
+        const rankingsData = {
+            pesado: [
+                { pos: 1, name: 'Tyson Fury', country: 'Reino Unido', flag: '🇬🇧', record: '34-1-1', ko: 24, status: 'campeón' },
+                { pos: 2, name: 'Oleksandr Usyk', country: 'Ucrania', flag: '🇺🇦', record: '22-0', ko: 14, status: 'retador' },
+                { pos: 3, name: 'Anthony Joshua', country: 'Reino Unido', flag: '🇬🇧', record: '28-3', ko: 25, status: 'contendiente' },
+                { pos: 4, name: 'Deontay Wilder', country: 'EE.UU.', flag: '🇺🇸', record: '43-3-1', ko: 42, status: 'contendiente' },
+                { pos: 5, name: 'Zhilei Zhang', country: 'China', flag: '🇨🇳', record: '26-2-1', ko: 21, status: 'contendiente' },
+                { pos: 6, name: 'Joseph Parker', country: 'Nueva Zelanda', flag: '🇳🇿', record: '35-3', ko: 23, status: 'clasificado' },
+            ],
+            supermedio: [
+                { pos: 1, name: 'Canelo Álvarez', country: 'México', flag: '🇲🇽', record: '62-2-2', ko: 39, status: 'campeón' },
+                { pos: 2, name: 'David Benavidez', country: 'EE.UU.', flag: '🇺🇸', record: '29-0', ko: 24, status: 'retador' },
+                { pos: 3, name: 'Dmitrii Bivol', country: 'Rusia', flag: '🇷🇺', record: '23-1', ko: 12, status: 'contendiente' },
+                { pos: 4, name: 'Caleb Plant', country: 'EE.UU.', flag: '🇺🇸', record: '22-2', ko: 14, status: 'contendiente' },
+                { pos: 5, name: 'Jermall Charlo', country: 'EE.UU.', flag: '🇺🇸', record: '33-0', ko: 22, status: 'contendiente' },
+                { pos: 6, name: 'David Morrell Jr', country: 'Cuba', flag: '🇨🇺', record: '11-0', ko: 9, status: 'clasificado' },
+            ],
+            welter: [
+                { pos: 1, name: 'Terence Crawford', country: 'EE.UU.', flag: '🇺🇸', record: '41-0', ko: 31, status: 'campeón' },
+                { pos: 2, name: 'Errol Spence Jr', country: 'EE.UU.', flag: '🇺🇸', record: '28-1', ko: 22, status: 'retador' },
+                { pos: 3, name: 'Jermell Charlo', country: 'EE.UU.', flag: '🇺🇸', record: '35-2-1', ko: 19, status: 'contendiente' },
+                { pos: 4, name: 'Keith Thurman', country: 'EE.UU.', flag: '🇺🇸', record: '30-1', ko: 22, status: 'contendiente' },
+                { pos: 5, name: 'Yordenis Ugas', country: 'Cuba', flag: '🇨🇺', record: '27-5', ko: 14, status: 'contendiente' },
+                { pos: 6, name: 'Mario Barrios', country: 'EE.UU.', flag: '🇺🇸', record: '29-2', ko: 19, status: 'clasificado' },
+            ],
+            gallo: [
+                { pos: 1, name: 'Naoya Inoue', country: 'Japón', flag: '🇯🇵', record: '28-0', ko: 25, status: 'campeón' },
+                { pos: 2, name: 'Junto Nakatani', country: 'Japón', flag: '🇯🇵', record: '28-0', ko: 22, status: 'retador' },
+                { pos: 3, name: 'Emmanuel Rodríguez', country: 'Puerto Rico', flag: '🇵🇷', record: '16-2', ko: 11, status: 'contendiente' },
+                { pos: 4, name: 'Alexandro Santiago', country: 'México', flag: '🇲🇽', record: '28-4-5', ko: 14, status: 'contendiente' },
+                { pos: 5, name: 'Vincent Astrolabio', country: 'Filipinas', flag: '🇵🇭', record: '19-1', ko: 14, status: 'contendiente' },
+                { pos: 6, name: 'Rey Vargas', country: 'México', flag: '🇲🇽', record: '36-1-1', ko: 22, status: 'clasificado' },
+            ]
+        };
+
+        // ===== RENDERIZAR TABLA DE CLASIFICACIÓN =====
+        function renderRanking(weight) {
+            const container = document.getElementById('rankingTable');
+            const data = rankingsData[weight];
+
+            const header = container.querySelector('.hidden.md\\:grid');
+            let html = header ? header.outerHTML : '';
+
+            data.forEach((fighter, i) => {
+                const statusColors = {
+                    'campeón': 'bg-wbc-gold text-wbc-green-900',
+                    'retador': 'bg-wbc-green-light text-white',
+                    'contendiente': 'bg-wbc-green text-white',
+                    'clasificado': 'bg-neutral-700 text-neutral-300',
+                };
+                const statusLabels = {
+                    'campeón': 'Campeón',
+                    'retador': 'Retador #1',
+                    'contendiente': 'Contendiente',
+                    'clasificado': 'Clasificado',
+                };
+
+                html += `
+                    <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-wbc-gold/5 hover:bg-wbc-gold/5 transition-colors items-center ${i === 0 ? 'bg-wbc-gold/5' : ''}">
+                        <div class="col-span-2 md:col-span-1 font-heading font-bold text-lg ${i === 0 ? 'text-wbc-gold' : 'text-neutral-500'}">${fighter.pos}</div>
+                        <div class="col-span-5 md:col-span-4 flex items-center gap-3">
+                            <span class="text-lg">${fighter.flag}</span>
+                            <span class="font-semibold text-white text-sm md:text-base">${fighter.name}</span>
+                        </div>
+                        <div class="col-span-3 md:col-span-2 text-sm text-neutral-400 hidden sm:block">${fighter.country}</div>
+                        <div class="col-span-2 md:col-span-2 text-center text-sm text-neutral-300 font-mono">${fighter.record}</div>
+                        <div class="col-span-2 md:col-span-1 text-center text-sm text-wbc-gold font-semibold">${fighter.ko}</div>
+                        <div class="col-span-2 md:col-span-2 text-right">
+                            <span class="inline-block text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full ${statusColors[fighter.status]}">${statusLabels[fighter.status]}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        renderRanking('pesado');
+
+        // ===== PESTAÑAS DE CLASIFICACIÓN =====
+        document.querySelectorAll('.weight-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.weight-tab').forEach(t => {
+                    t.classList.remove('active', 'bg-wbc-gold', 'text-wbc-green-900', 'font-semibold');
+                    t.classList.add('bg-wbc-green-dark', 'text-neutral-300', 'border', 'border-wbc-gold/10');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.classList.add('active', 'bg-wbc-gold', 'text-wbc-green-900', 'font-semibold');
+                tab.classList.remove('bg-wbc-green-dark', 'text-neutral-300', 'border', 'border-wbc-gold/10');
+                tab.setAttribute('aria-selected', 'true');
+
+                renderRanking(tab.dataset.weight);
+            });
+        });
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll > 50) {
+                navbar.classList.add('bg-wbc-green-900/95', 'backdrop-blur-xl', 'shadow-lg', 'shadow-black/20', 'border-b', 'border-wbc-gold/10');
+            } else {
+                navbar.classList.remove('bg-wbc-green-900/95', 'backdrop-blur-xl', 'shadow-lg', 'shadow-black/20', 'border-b', 'border-wbc-gold/10');
+            }
+
+            if (currentScroll > lastScroll && currentScroll > 300) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        }, { passive: true });
+
+        // ===== MENÚ MÓVIL =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open', menuOpen);
+            mobileMenuBtn.setAttribute('aria-expanded', menuOpen);
+
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+            lucide.createIcons();
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.remove('open');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // ===== BÚSQUEDA =====
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBar = document.getElementById('searchBar');
+        const searchClose = document.getElementById('searchClose');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        const searchableItems = [
+            { title: 'Tyson Fury', category: 'Campeón', href: '#campeones' },
+            { title: 'Canelo Álvarez', category: 'Campeón', href: '#campeones' },
+            { title: 'Naoya Inoue', category: 'Campeón', href: '#campeones' },
+            { title: 'Errol Spence Jr', category: 'Campeón', href: '#campeones' },
+            { title: 'Fury vs Usyk II', category: 'Combate', href: '#combates' },
+            { title: 'Canelo vs Crawford', category: 'Combate', href: '#combates' },
+            { title: 'Inoue vs Nakatani', category: 'Combate', href: '#combates' },
+            { title: 'Historia del WBC', category: 'Historia', href: '#historia' },
+            { title: 'Clasificación Peso Pesado', category: 'Ranking', href: '#clasificacion' },
+            { title: 'Noticias del Ring', category: 'Noticias', href: '#noticias' },
+        ];
+
+        searchToggle.addEventListener('click', () => {
+            searchBar.style.transform = 'translateY(0)';
+            setTimeout(() => searchInput.focus(), 300);
+        });
+
+        searchClose.addEventListener('click', () => {
+            searchBar.style.transform = 'translateY(-100%)';
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchBar.style.transform = 'translateY(-100%)';
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+                closeTrailerModal();
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query.length < 2) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const filtered = searchableItems.filter(item =>
+                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                searchResults.innerHTML = '<p class="text-sm text-neutral-500 py-2">No se encontraron resultados</p>';
+                return;
+            }
+
+            searchResults.innerHTML = filtered.map(item => `
+                <a href="${item.href}" class="flex items-center justify-between p-3 rounded-lg hover:bg-wbc-gold/10 transition-colors group" onclick="document.getElementById('searchBar').style.transform='translateY(-100%)'; document.getElementById('searchInput').value=''; document.getElementById('searchResults').innerHTML='';">
+                    <div>
+                        <span class="text-sm text-white font-medium group-hover:text-wbc-gold transition-colors">${item.title}</span>
+                        <span class="block text-xs text-neutral-500">${item.category}</span>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-600 group-hover:text-wbc-gold transition-colors"></i>
+                </a>
+            `).join('');
+            lucide.createIcons();
+        });
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = message;
+
+            if (type === 'success') {
+                toastIcon.setAttribute('data-lucide', 'check-circle');
+            } else if (type === 'info') {
+                toastIcon.setAttribute('data-lucide', 'info');
+            }
+            lucide.createIcons();
+
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ===== BOTONES COMPRAR ENTRADAS =====
+        document.querySelectorAll('.buy-ticket-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const fight = btn.dataset.fight;
+                showToast(`Entradas para "${fight}" añadidas.`, 'success');
+            });
+        });
+
+        // ===== FORMULARIO NEWSLETTER =====
+        document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput');
+            const error = document.getElementById('emailError');
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim()) {
+                error.textContent = 'Por favor, introduce tu correo electrónico.';
+                error.classList.remove('hidden');
+                email.setAttribute('aria-invalid', 'true');
+                return;
+            }
+            if (!emailRegex.test(email.value)) {
+                error.textContent = 'El formato del correo no es válido.';
+                error.classList.remove('hidden');
+                email.setAttribute('aria-invalid', 'true');
+                return;
+            }
+
+            error.classList.add('hidden');
+            email.setAttribute('aria-invalid', 'false');
+            email.value = '';
+            showToast('¡Suscripción realizada correctamente!', 'success');
+        });
+
+        // ===== MODAL TRAILER =====
+        const trailerModal = document.getElementById('trailerModal');
+
+        document.getElementById('playTrailerBtn').addEventListener('click', () => {
+            trailerModal.classList.remove('opacity-0', 'pointer-events-none');
+            trailerModal.classList.add('opacity-100');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeTrailerModal() {
+            trailerModal.classList.add('opacity-0', 'pointer-events-none');
+            trailerModal.classList.remove('opacity-100');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('closeTrailer').addEventListener('click', closeTrailerModal);
+        trailerModal.addEventListener('click', (e) => {
+            if (e.target === trailerModal) closeTrailerModal();
+        });
+
+        // ===== INTERSECTION OBSERVER - ANIMACIONES DE ENTRADA =====
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -80px 0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ===== CONTADOR ANIMADO =====
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.count);
+                    const duration = 2000;
+                    const start = performance.now();
+
+                    function update(currentTime) {
+                        const elapsed = currentTime - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(eased * target);
+
+                        el.textContent = current.toLocaleString('es-ES');
+
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        } else {
+                            el.textContent = target.toLocaleString('es-ES') + '+';
+                        }
+                    }
+
+                    requestAnimationFrame(update);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('[data-count]').forEach(el => {
+            counterObserver.observe(el);
+        });
+
+        // ===== GALERÍA - LIGHTBOX SIMPLE =====
+        document.querySelectorAll('[aria-label^="Ampliar imagen"]').forEach(item => {
+            item.addEventListener('click', () => {
+                showToast('Vista ampliada (funcionalidad demo)', 'info');
+            });
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    showToast('Vista ampliada (funcionalidad demo)', 'info');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
